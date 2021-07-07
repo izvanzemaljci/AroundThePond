@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 8.0f;
     private Vector3 playerVelocity = Vector3.zero;
     private Vector3 move = Vector3.zero;
+    private Vector3 originalPosition = new Vector3(367.9f,9.1f,259.7f);
 
     private void Update() {
         Move();
@@ -76,5 +77,10 @@ public class PlayerController : MonoBehaviour
         if(currentRotation.x > 180) currentRotation.x -= 360;
         currentRotation.x = Mathf.Clamp(currentRotation.x, upLimit, downLimit);
         cameraHolder.localRotation = Quaternion.Euler(currentRotation);
+    }
+
+    public void Return() {
+        Time.timeScale = 1f;
+        characterController.gameObject.transform.position = originalPosition;
     }
 }
