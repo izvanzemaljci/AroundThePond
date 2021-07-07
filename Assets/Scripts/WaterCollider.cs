@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class WaterCollider : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnTriggerExit(Collider other) {
+        if(other.CompareTag("Player")) {
+            FindObjectOfType<GameController>().LooseLife();
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("entered water");
+        if(other.CompareTag("Player")) {
+            Time.timeScale = 0f;
+            FindObjectOfType<AudioManager>().Play("Splash");
+            FindObjectOfType<GameController>().PlayVideo();
+        }
     }
 }
