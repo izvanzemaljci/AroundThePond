@@ -114,7 +114,7 @@ public class GameController : MonoBehaviour
 
     public void PlayAgain() {
         Time.timeScale = 1f;
-        FindObjectOfType<AudioManager>().Play("Sparkle");
+        AudioManager.I.Play("Sparkle");
         gameOverMenu.SetActive(false);
         scorePanel.SetActive(true);
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);

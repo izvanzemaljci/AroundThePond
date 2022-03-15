@@ -13,7 +13,7 @@ public class WaterCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")) {
             Time.timeScale = 0f;
-            FindObjectOfType<AudioManager>().Play("Splash");
+            AudioManager.I.Play("Splash");
             FindObjectOfType<GameController>().PlayVideo();
         }
     }

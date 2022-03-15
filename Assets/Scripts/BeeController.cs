@@ -29,7 +29,7 @@ public class BeeController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")) {
-            FindObjectOfType<AudioManager>().Play("Bee");
+            AudioManager.I.Play("Bee");
             FindObjectOfType<GameController>().LooseLife();
             Destroy(gameObject);
         }

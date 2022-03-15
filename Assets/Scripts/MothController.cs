@@ -27,7 +27,7 @@ public class MothController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")) {
-            FindObjectOfType<AudioManager>().Play("Sparkle");
+            AudioManager.I.Play("Sparkle");
             sys.Play();
             mesh.enabled = false;
             FindObjectOfType<GameController>().CollectFly();
