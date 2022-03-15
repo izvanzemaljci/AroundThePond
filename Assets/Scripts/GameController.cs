@@ -10,8 +10,6 @@ public class GameController : MonoBehaviour
 {
     private int lives = 3;
     private int fliesCollected = 0;
-    [SerializeField] private RawImage video = default;
-    [SerializeField] private VideoPlayer videoPlayer = default;
     [SerializeField] private Text livesDisplay = default;
     [SerializeField] private Text fliesDisplay = default;
 
@@ -28,17 +26,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private Button playButton = default;
     [SerializeField] private Button optionsButton = default;
     [SerializeField] private Button quitButton = default;
-    
-    private void Awake() {
-        videoPlayer.Prepare();
-    }
-    
+
     void Start()
     {
         introCamera.enabled = true;
         mainCamera.enabled = false;
-        video.enabled = false;
-        videoPlayer.loopPointReached += EndReached;
         playAgainButton.onClick.AddListener(PlayAgain);
         playButton.onClick.AddListener(Play);
         quitButton.onClick.AddListener(Quit);
@@ -57,23 +49,28 @@ public class GameController : MonoBehaviour
     }
 
     //prebacit u player cont
-    public void LooseLife() {
+    public void LooseLife()
+    {
         lives--;
-        if(lives == 0) {
+        if (lives == 0)
+        {
             GameOver();
         }
     }
 
     //prebacit u player cont
-    public void CollectFly() {
+    public void CollectFly()
+    {
         fliesCollected++;
     }
 
-    public void GameStart() {
+    public void GameStart()
+    {
         StartCoroutine(Started());
     }
 
-    IEnumerator Started() {
+    IEnumerator Started()
+    {
         yield return new WaitForSeconds(2f);
         StartCoroutine(FadeImage(introImage));
         yield return new WaitForSeconds(1f);
@@ -84,14 +81,16 @@ public class GameController : MonoBehaviour
         StartCoroutine(FadeImageIn(quitButton.image));
     }
 
-    private void Play() {
+    private void Play()
+    {
         buttons.SetActive(false);
         introCamera.enabled = false;
         mainCamera.enabled = true;
         scorePanel.SetActive(true);
     }
 
-    IEnumerator FadeImage(Image img) {
+    IEnumerator FadeImage(Image img)
+    {
         for (float i = 1; i >= 0; i -= Time.deltaTime)
         {
             img.color = new Color(1, 1, 1, i);
@@ -99,7 +98,8 @@ public class GameController : MonoBehaviour
         }
     }
 
-    IEnumerator FadeImageIn(Image img) {
+    IEnumerator FadeImageIn(Image img)
+    {
         for (float i = 0; i <= 1; i += Time.deltaTime)
         {
             img.color = new Color(1, 1, 1, i);
@@ -107,12 +107,8 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void PlayVideo() {
-        video.enabled = true;
-        videoPlayer.Play();    
-    }
-
-    public void PlayAgain() {
+    public void PlayAgain()
+    {
         Time.timeScale = 1f;
         AudioManager.I.Play("Sparkle");
         gameOverMenu.SetActive(false);
@@ -120,20 +116,15 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
     }
 
-    public void GameOver() {
+    public void GameOver()
+    {
         scorePanel.SetActive(false);
         gameOverMenu.SetActive(true);
         Time.timeScale = 0f;
     }
 
-    void EndReached(VideoPlayer videoPlayer) {
-        videoPlayer.Stop();
-        video.enabled = false;
-        FindObjectOfType<PlayerController>().Return();
-    }
-
-    private void Quit() {
+    private void Quit()
+    {
 
     }
-    
 }
